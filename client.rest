@@ -1,0 +1,62 @@
+@BaseUrl= http://127.1.1:3000
+
+# MESSAGE
+### List all messages
+GET {{BaseUrl}}/message/
+?limit=2
+&offset=2
+
+### List one message
+GET {{BaseUrl}}/message/2
+
+### Create a message
+POST  {{BaseUrl}}/message/
+Content-Type: application/json
+
+{
+    "text": "Morning",
+    "ofId": 4,
+    "toId":5
+}
+
+### Update a message
+PATCH  {{BaseUrl}}/message/4
+Content-Type: application/json
+
+{
+    "text": "Hi !!!"
+}
+
+### Delete one message by id
+DELETE {{BaseUrl}}/message/3
+
+
+# PEOPLE
+
+
+### List all people
+GET {{BaseUrl}}/people/
+
+### List one person
+GET {{BaseUrl}}/people/2
+
+### Create a person
+POST  {{BaseUrl}}/people/
+Content-Type: application/json
+
+{
+    "name": "josuel4",
+    "email": "test4@test.com",
+    "password":"12345"
+}
+
+### Update a person
+PATCH  {{BaseUrl}}/people/3
+Content-Type: application/json
+
+{
+    "password": "santos123"
+}
+
+### Delete one person by id
+DELETE {{BaseUrl}}/people/3
