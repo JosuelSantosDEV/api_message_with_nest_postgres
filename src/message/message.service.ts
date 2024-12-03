@@ -18,6 +18,7 @@ export class MessageService {
     async findAll(paginationDto?: PaginationDto){
         const {limit = 10, offset = 0} = paginationDto;
         const page = offset > 0 ? offset * limit : 0; 
+ 
         return await this.messageEntity.find({
             take: limit,
             skip: page,

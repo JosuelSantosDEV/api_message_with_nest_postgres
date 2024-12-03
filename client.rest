@@ -12,6 +12,7 @@ GET {{BaseUrl}}/message/2
 ### Create a message
 POST  {{BaseUrl}}/message/
 Content-Type: application/json
+Authorization: Bearer dshdwjkjeijrijkfhusfjsa.fhfnjfjijfdij.iojfijfjefsjmiokfjeisa
 
 {
     "text": "Morning",
