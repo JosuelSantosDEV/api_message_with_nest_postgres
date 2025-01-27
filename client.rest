@@ -1,5 +1,5 @@
 @BaseUrl= http://127.1.1:3000
-
+@AuthToken= {{authenticate.response.body.accessToken}}
 # MESSAGE
 ### List all messages
 GET {{BaseUrl}}/message/
@@ -36,28 +36,46 @@ DELETE {{BaseUrl}}/message/3
 
 
 ### List all people
-GET {{BaseUrl}}/people/
+GET {{BaseUrl}}/people
+Authorization: Bearer {{AuthToken}}
 
 ### List one person
-GET {{BaseUrl}}/people/2
-
+GET {{BaseUrl}}/people/8
+Authorization: Bearer {{AuthToken}}
 ### Create a person
 POST  {{BaseUrl}}/people/
 Content-Type: application/json
 
 {
-    "name": "josuel4",
-    "email": "test4@test.com",
+    "name": "josuel5",
+    "email": "test5@test.com",
     "password":"12345"
 }
 
 ### Update a person
-PATCH  {{BaseUrl}}/people/3
+PATCH  {{BaseUrl}}/people/4
 Content-Type: application/json
+Authorization: Bearer {{AuthToken}}
 
 {
-    "password": "santos123"
+    "name": "John Doe"
 }
 
 ### Delete one person by id
-DELETE {{BaseUrl}}/people/3
+DELETE {{BaseUrl}}/people/2
+Authorization: Bearer {{AuthToken}}
+
+
+# AUTH
+
+
+
+### Login person
+# @name authenticate
+POST  {{BaseUrl}}/auth/
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password":"12345"
+}

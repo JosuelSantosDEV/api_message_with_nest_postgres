@@ -6,14 +6,19 @@ import { CreateMessageDto } from "./dto/create-message.dto";
 import { UpdateMessageDto } from "./dto/update-message.dto";
 import { PeopleService } from "src/people/people.service";
 import { PaginationDto } from "src/common/dto/pagination.dto";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class MessageService {
     constructor(
         @InjectRepository(MessageEntity)
         private readonly messageEntity: Repository<MessageEntity>,
-        private readonly peopleService: PeopleService
-    ){}
+        private readonly peopleService: PeopleService,
+        private readonly configService: ConfigService
+    ){
+        const databaseUserName = this.configService.get<string>('DB_USERNAME');
+        console.log({databaseUserName})
+    }
 
     async findAll(paginationDto?: PaginationDto){
         const {limit = 10, offset = 0} = paginationDto;

@@ -8,23 +8,39 @@ import { SimpleMiddleware } from './common/middlewares/simple.middleware';
 import { AnotherMiddleware } from './common/middlewares/another.middleware';
 import { APP_FILTER } from '@nestjs/core';
 import { MyExceptionFilter } from './common/filters/my-exception.filter';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        DB_TYPE: Joi.required(),
+        DB_HOST: Joi.required(),
+        DB_PORT: Joi.number().default(5432),
+        DB_DATABASE: Joi.required(),
+        DB_USERNAME: Joi.required(),
+        DB_PASSWORD: Joi.required(),
+        AUTO_LOAD_ENTITIES: Joi.number().min(0).max(1),
+        SYNCHRONIZE: Joi.number().min(0).max(1),
+      })
+    }),
     TypeOrmModule.forRoot(
       {
-        type: "postgres",
-        host: "localhost",
-        port: 5432,
-        database: "api_nest_message",
-        username: "postgres",
-        password: "postgres",
-        autoLoadEntities: true,
-        synchronize: true
+        type: process.env.DB_TYPE as "postgres",
+        host: process.env.DB_HOST,
+        port: +process.env.DB_PORT,
+        database: process.env.DB_DATABASE,
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        autoLoadEntities: Boolean(process.env.AUTO_LOAD_ENTITIES),
+        synchronize: Boolean(process.env.SYNCHRONIZE)
       }
     ),
     MessageModule,
-    PeopleModule
+    PeopleModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [
